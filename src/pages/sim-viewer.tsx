@@ -107,48 +107,51 @@ export const SimViewer: React.FC<Props> = ({
   return (
     <div className="h-full w-full p-4">
       <h1 className="text-2xl font-bold mb-4">AeroSim Simulator</h1>
-      <div className="h-[calc(100vh-8rem)] w-full rounded-lg overflow-hidden border border-border relative">
-        <div className="absolute top-0 left-0 z-10">
-          <NavBar
-            handleReload={handleReload}
-            handleCameraButton={() => {
-              setCameraState({ ...cameraState, show: !cameraState.show });
-              localStorage.setItem("cameraState", JSON.stringify(cameraState));
-            }}
-            handlePFDButton={() =>
-              setPfdState({ ...pfdState, show: !pfdState.show })
-            }
-          />
+      <div className="flex flex-row">
+        <NavBar
+          handleReload={handleReload}
+          handleCameraButton={() => {
+            setCameraState({ ...cameraState, show: !cameraState.show });
+            localStorage.setItem("cameraState", JSON.stringify(cameraState));
+          }}
+          handlePFDButton={() =>
+            setPfdState({ ...pfdState, show: !pfdState.show })
+          }
+        />
+
+        <div className="h-[calc(100vh-8rem)] w-full rounded-lg overflow-hidden border border-border relative">
+          <FlightControls />
+          {memoizedRenderer}
+
+          {cameraState.show && (
+            <PictureInPicture
+              pipState={cameraState}
+              setPipState={setCameraState}
+            >
+              <ImageStream />
+            </PictureInPicture>
+          )}
+
+          {pfdState.show && (
+            <PictureInPicture pipState={pfdState} setPipState={setPfdState}>
+              <PFD
+                airspeed={flightData.airspeed_kts}
+                altitude={flightData.altitude_ft}
+                heading={flightData.heading_deg}
+                pitch={flightData.pitch_deg}
+                roll={flightData.roll_deg}
+                verticalSpeed={flightData.vertical_speed_fps}
+                tas={flightData.true_airspeed_kts}
+                oat={sampleData.oat}
+                barometer={flightData.altimeter_pressure_setting_inhg}
+                transponder={sampleData.transponder}
+                navSource={sampleData.navSource}
+                navCourse={sampleData.navCourse}
+                time={sampleData.time}
+              />
+            </PictureInPicture>
+          )}
         </div>
-
-        <FlightControls />
-        {memoizedRenderer}
-
-        {cameraState.show && (
-          <PictureInPicture pipState={cameraState} setPipState={setCameraState}>
-            <ImageStream />
-          </PictureInPicture>
-        )}
-
-        {pfdState.show && (
-          <PictureInPicture pipState={pfdState} setPipState={setPfdState}>
-            <PFD
-              airspeed={flightData.airspeed_kts}
-              altitude={flightData.altitude_ft}
-              heading={flightData.heading_deg}
-              pitch={flightData.pitch_deg}
-              roll={flightData.roll_deg}
-              verticalSpeed={flightData.vertical_speed_fps}
-              tas={flightData.true_airspeed_kts}
-              oat={sampleData.oat}
-              barometer={flightData.altimeter_pressure_setting_inhg}
-              transponder={sampleData.transponder}
-              navSource={sampleData.navSource}
-              navCourse={sampleData.navCourse}
-              time={sampleData.time}
-            />
-          </PictureInPicture>
-        )}
       </div>
     </div>
   );
