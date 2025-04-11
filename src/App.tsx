@@ -72,8 +72,14 @@ export function App(): React.ReactElement {
     show: true,
   };
 
-  const [cameraState, setCameraState] = useState(defaultCameraState);
-  const [pfdState, setPfdState] = useState(defaultPfdState);
+  const initialCameraState =
+    JSON.parse(sessionStorage.getItem("cameraState") ?? "null") ||
+    defaultCameraState;
+  const initialPfdState =
+    JSON.parse(sessionStorage.getItem("pfdState") ?? "null") || defaultPfdState;
+
+  const [cameraState, setCameraState] = useState(initialCameraState);
+  const [pfdState, setPfdState] = useState(initialPfdState);
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="aerosim-ui-theme">

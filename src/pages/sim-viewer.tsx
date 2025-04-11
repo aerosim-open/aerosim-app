@@ -43,6 +43,20 @@ export const SimViewer: React.FC<Props> = ({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const handleReload = () => {
+    sessionStorage.setItem("cameraState", JSON.stringify(cameraState));
+    sessionStorage.setItem("pfdState", JSON.stringify(pfdState));
+    window.location.reload();
+  };
+
+  // Keep camera and pfd state when page reloads, run once the component mounts
+  useEffect(() => {
+    const savedCameraState = sessionStorage.getItem("cameraState");
+    if (savedCameraState) setCameraState(JSON.parse(savedCameraState));
+    const savedPfdState = sessionStorage.getItem("pfdState");
+    if (savedPfdState) setPfdState(JSON.parse(savedPfdState));
+  }, []);
+
   // Memoize the renderer component to prevent unnecessary re-renders
   // This is beneficial because:
   // 1. The renderer components are likely expensive to render
@@ -96,9 +110,11 @@ export const SimViewer: React.FC<Props> = ({
       <div className="h-[calc(100vh-8rem)] w-full rounded-lg overflow-hidden border border-border relative">
         <div className="absolute top-0 left-0 z-10">
           <NavBar
-            handleCameraButton={() =>
-              setCameraState({ ...cameraState, show: !cameraState.show })
-            }
+            handleReload={handleReload}
+            handleCameraButton={() => {
+              setCameraState({ ...cameraState, show: !cameraState.show });
+              localStorage.setItem("cameraState", JSON.stringify(cameraState));
+            }}
             handlePFDButton={() =>
               setPfdState({ ...pfdState, show: !pfdState.show })
             }
