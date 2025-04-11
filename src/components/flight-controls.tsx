@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useKeyboardInput } from "./input/keyboard";
-import { useGamepadInput } from "./input/gamepad";
+import { useKeyboardInput } from "../hooks/input/use-keyboard";
+import { useGamepadInput } from "../hooks/input/use-gamepad";
 import { wsLogger, clearLogs } from "../utils/logger";
 
 export const FlightControls: React.FC = () => {

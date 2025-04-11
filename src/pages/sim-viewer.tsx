@@ -1,7 +1,7 @@
 import React, { useMemo, useEffect } from "react";
 import { UnrealViewer } from "@/components/unreal-viewer";
 import { OmniverseViewer } from "@/components/omniverse-viewer";
-import { FlightControls } from "@/components/input-handler";
+import { FlightControls } from "@/components/flight-controls";
 import {
   PictureInPicture,
   pipState,
