@@ -9,7 +9,8 @@ interface AttitudeIndicatorProps {
 }
 
 // Utility function to replace reactflow's clamp
-const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
+const clamp = (value: number, min: number, max: number) =>
+  Math.min(Math.max(value, min), max);
 
 export const AttitudeIndicator: React.FC<AttitudeIndicatorProps> = ({
   pitch,
@@ -34,7 +35,7 @@ export const AttitudeIndicator: React.FC<AttitudeIndicatorProps> = ({
         style={{ transform: `rotate(${rotation}deg) translateY(-35px)` }}
       >
         {/* Bank angle marks */}
-        {[0, 10, 20, 30, 45, 60, 75, 90].map((angle) => (
+        {[0, 10, 20, 30, 45, 60].map((angle) => (
           <React.Fragment key={`bank-${angle}`}>
             <div
               className="absolute left-1/2 w-1 h-4 bg-white "
