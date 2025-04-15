@@ -25,7 +25,7 @@ export const ImageStream: React.FC = () => {
       {imageSrc ? (
         <img src={imageSrc} alt="Camera Stream" />
       ) : (
-        <p>Connecting...</p>
+        <p>Camera connecting...</p>
       )}
     </div>
   );

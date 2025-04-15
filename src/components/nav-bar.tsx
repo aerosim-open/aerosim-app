@@ -1,7 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Camera, Gauge, RotateCw } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
 
 interface NavBarProps {
   handleReload: () => void;
@@ -15,7 +14,7 @@ export const NavBar: React.FC<NavBarProps> = ({
   handlePFDButton,
 }) => {
   return (
-    <div className="flex flex-col gap-2 p-2">
+    <div className="flex flex-row gap-2">
       <Button
         variant="ghost"
         size="icon"
@@ -25,8 +24,6 @@ export const NavBar: React.FC<NavBarProps> = ({
       >
         <RotateCw className="h-5 w-5" />
       </Button>
-
-      <Separator className="my-1 bg-border/50" />
 
       <Button
         variant="ghost"
