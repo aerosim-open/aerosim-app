@@ -3,7 +3,8 @@ import { cn } from "@/lib/utils";
 import { AirspeedTape } from "./airspeed-tape";
 import { AltitudeTape } from "./altitude-tape";
 import { AttitudeIndicator } from "./attitude-indicator";
-import { HeadingIndicator } from "./heading-indicator";
+import { HeadingCompassIndicator } from "./heading-indicator";
+import {SelectorArrow, ExteriorHSI, HeadingBox } from "./heading-indicator"
 import { VerticalSpeedIndicator } from "./vertical-speed-indicator";
 import { FlightData } from "./flight-data";
 
@@ -31,6 +32,8 @@ export interface PFDProps {
   airspeed?: number;
   altitude?: number;
   heading?: number;
+  needleHeading?: number;
+  deviation?: number;
   pitch?: number;
   roll?: number;
   verticalSpeed?: number;
@@ -39,7 +42,6 @@ export interface PFDProps {
   oat?: number;
   barometer?: number;
   transponder?: string;
-  navSource?: string;
   navCourse?: number;
   time?: string;
 }
@@ -66,7 +68,9 @@ export const PFD: React.FC<PFDProps> = ({
   className,
   airspeed = 120,
   altitude = 5000,
-  heading = 270,
+  heading = 0,
+  needleHeading = 0,
+  deviation = 0,
   pitch = 0,
   roll = 0,
   verticalSpeed = 0,
@@ -74,15 +78,16 @@ export const PFD: React.FC<PFDProps> = ({
   oat = 7,
   barometer = 29.92,
   transponder = "5537",
-  navSource = "VOR 1",
   navCourse = 0,
   time = "23:00:34",
 }) => {
   const mergedConfig = { ...defaultConfig, ...config };
   const { theme } = mergedConfig;
 
-  heading = parseFloat(heading.toFixed(2))
-  tas = parseFloat(tas.toFixed(2))
+  const navSource = navCourse == 0  ? "VOR 1" : navCourse == 1 ? "VOR 2" : "VOR 3";
+
+  heading = parseFloat(heading.toFixed(2));
+  tas = parseFloat(tas.toFixed(2));
 
   return (
     <div
@@ -106,42 +111,29 @@ export const PFD: React.FC<PFDProps> = ({
 
         {/* Airspeed Tape (left) */}
         {mergedConfig.showAirspeedTape && (
-          <AirspeedTape
-            airspeed={airspeed}
-            tas={tas}
-          />
+          <AirspeedTape airspeed={airspeed} tas={tas} />
         )}
 
         {/* Altitude Tape (right) */}
         {mergedConfig.showAltitudeTape && (
-          <AltitudeTape
-            altitude={altitude}
-            barometer={barometer}
-          />
+          <AltitudeTape altitude={altitude} barometer={barometer} />
         )}
 
         {/* Heading Indicator (bottom) */}
         {mergedConfig.showHeadingIndicator && (
-          <HeadingIndicator
-            heading={heading}
-            navCourse={navCourse}
-          />
+          <HeadingCompassIndicator heading={heading} needleHeading={needleHeading} deviation={deviation} navCourse={navCourse} />
         )}
-
+        <SelectorArrow></SelectorArrow>
+        <HeadingBox heading={heading}></HeadingBox>
+        <ExteriorHSI></ExteriorHSI>
         {/* Vertical Speed Indicator (right of altitude) */}
         {mergedConfig.showVerticalSpeedIndicator && (
-          <VerticalSpeedIndicator
-          verticalSpeed={verticalSpeed}
-          />
+          <VerticalSpeedIndicator verticalSpeed={verticalSpeed} />
         )}
 
         {/* Flight Data (bottom) */}
         {mergedConfig.showFlightData && (
-          <FlightData
-            oat={oat}
-            transponder={transponder}
-            time={time}
-          />
+          <FlightData oat={oat} transponder={transponder} time={time} navSource={navSource} />
         )}
       </div>
     </div>

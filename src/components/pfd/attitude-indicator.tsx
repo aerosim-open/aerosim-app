@@ -111,12 +111,18 @@ export const AttitudeIndicator: React.FC<AttitudeIndicatorProps> = ({
   };
 
   return (
-    <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+    <div
+      className="absolute inset-[-1000px] flex items-center justify-center overflow-hidden"
+      style={{
+        position: "absolute",
+        transform: "translateX(-10px) translateY(-100px)",
+      }}
+    >
       {/* Artificial Horizon */}
       <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
         {/* Sky and Ground */}
         <div
-          className="absolute w-[500%] h-[500%] transform origin-center transition-transform duration-100 ease-linear"
+          className="absolute w-[10000px] h-[10000px] transform origin-center transition-transform duration-100 ease-linear"
           style={{
             transform: `rotate(${-roll}deg) translateY(${18 + 20 * (pitch / 10 - 1)}px)`,
           }}
@@ -171,18 +177,6 @@ export const AttitudeIndicator: React.FC<AttitudeIndicatorProps> = ({
         <div className="absolute w-6 h-6 border-2 border-cyan-400 rounded-full z-10 transform translate-x-4 translate-y-2">
           <div className="absolute w-4 h-0.5 bg-cyan-400 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
           <div className="absolute w-0.5 h-4 bg-cyan-400 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
-        </div>
-
-        {/* Nav Source Indicator */}
-        <div className="absolute bottom-1/4 left-1/2 transform -translate-x-1/2 text-green-400 text-sm font-semibold">
-          {navSource}
-        </div>
-
-        {/* Heading Display */}
-        <div className="absolute top-1/4 left-1/2 transform -translate-x-1/2 text-white text-2xl font-bold">
-          <span className="bg-black bg-opacity-50 px-2 py-1 rounded">
-            {heading}°
-          </span>
         </div>
       </div>
     </div>
