@@ -65,6 +65,7 @@ export const PictureInPicture: React.FC<Props> = ({
             width: pipState.size.width + delta.width,
             height: pipState.size.height + delta.height,
           },
+          position: { x: _position.x, y: _position.y },
         });
       }}
       className={`rounded-lg overflow-hidden border border-border shadow-lg bg-black ${className}`}
