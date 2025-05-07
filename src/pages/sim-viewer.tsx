@@ -140,11 +140,12 @@ export const SimViewer: React.FC<Props> = ({
               roll={flightData.roll_deg}
               verticalSpeed={flightData.vertical_speed_fps}
               tas={flightData.true_airspeed_kts}
-              oat={sampleData.oat}
               barometer={flightData.altimeter_pressure_setting_inhg}
+              navCourse={flightData.hsi_mode}
+              deviation={flightData.hsi_course_deviation_deg}
+              needleHeading={flightData.hsi_course_select_heading_deg}
               transponder={sampleData.transponder}
-              navSource={sampleData.navSource}
-              navCourse={sampleData.navCourse}
+              oat={sampleData.oat}
               time={sampleData.time}
             />
           </PictureInPicture>
