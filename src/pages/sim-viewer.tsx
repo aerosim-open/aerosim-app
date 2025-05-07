@@ -106,21 +106,21 @@ export const SimViewer: React.FC<Props> = ({
 
   return (
     <div className="h-full w-full p-4">
-      <h1 className="text-2xl font-bold mb-4">AeroSim Simulator</h1>
-      <div className="h-[calc(100vh-8rem)] w-full rounded-lg overflow-hidden border border-border relative">
-        <div className="absolute top-0 left-0 z-10">
-          <NavBar
-            handleReload={handleReload}
-            handleCameraButton={() => {
-              setCameraState({ ...cameraState, show: !cameraState.show });
-              localStorage.setItem("cameraState", JSON.stringify(cameraState));
-            }}
-            handlePFDButton={() =>
-              setPfdState({ ...pfdState, show: !pfdState.show })
-            }
-          />
-        </div>
+      <div className="flex flex-row gap-10">
+        <h1 className="text-2xl font-bold mb-4 mx-2">AeroSim Simulator</h1>
+        <NavBar
+          handleReload={handleReload}
+          handleCameraButton={() => {
+            setCameraState({ ...cameraState, show: !cameraState.show });
+            localStorage.setItem("cameraState", JSON.stringify(cameraState));
+          }}
+          handlePFDButton={() =>
+            setPfdState({ ...pfdState, show: !pfdState.show })
+          }
+        />
+      </div>
 
+      <div className="h-[calc(100vh-8rem)] w-full rounded-lg overflow-hidden border border-border relative">
         <FlightControls />
         {memoizedRenderer}
 
